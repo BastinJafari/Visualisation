@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcTo;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.HLineTo;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -81,6 +82,9 @@ public class Simulationexample extends Application {
 		sendControl.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		        simulation.getSelected().sendMarker();
+		    	
+		    	
+
 		    }
 		});
 		root.getChildren().add(sendControl);

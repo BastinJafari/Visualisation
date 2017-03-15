@@ -59,7 +59,7 @@ public class Process {
 
 	// returns a list of all send messages at a certain time
 	public List<Message> sendMessage() {
-
+		System.out.println(this.messageSend);
 		List<Message> messagesSend = new ArrayList<Message>();
 
 		// if it should send marker messages
@@ -76,7 +76,6 @@ public class Process {
 				}
 
 			}
-			markerSend = false;
 		}
 
 		// if there should be a random travel time
@@ -103,7 +102,8 @@ public class Process {
 			}
 		}
 
-		if (outGoingChannels.size() > 0) {
+		//if there was no marker command send normal message
+		if (outGoingChannels.size() > 0 && !markerSend) {
 
 			int randomProcess = ThreadLocalRandom.current().nextInt(0, outGoingChannels.size()); // it
 			// picks
@@ -122,6 +122,7 @@ public class Process {
 			return messagesSend;
 		}
 		this.messageSend = false;
+		markerSend = false;
 		return messagesSend;
 	}
 
