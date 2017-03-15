@@ -59,12 +59,13 @@ public class Process {
 
 	// returns a list of all send messages at a certain time
 	public List<Message> sendMessage() {
-		System.out.println(this.messageSend);
+		System.out.println("Bevor" + this.messageSend);
 		List<Message> messagesSend = new ArrayList<Message>();
 
 		// if it should send marker messages
 
 		if (markerSend) {
+			System.out.println("MARKERASENASD");
 
 			if (outGoingChannels.size() > 0) {
 				for (int i = 0; i < outGoingChannels.size(); i++) {
@@ -116,13 +117,14 @@ public class Process {
 			messagesSend.add(message);
 		}
 
-		else {
+		if (outGoingChannels.size() == 0) {
 			NormalMessage noMessage = new NormalMessage("no connections", 0, 0, this, this);
 			messagesSend.add(noMessage);
 			return messagesSend;
 		}
 		this.messageSend = false;
 		markerSend = false;
+		System.out.println("Danach" + this.messageSend());
 		return messagesSend;
 	}
 
@@ -139,7 +141,7 @@ public class Process {
 		if (message.isMarker()) {
 
 			this.localSnapshotTaken = true;
-			this.markerSend = true;
+			sendMarker();
 		}
 
 		this.messagesInProcessList.add(message);
