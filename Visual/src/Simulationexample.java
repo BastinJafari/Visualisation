@@ -26,7 +26,7 @@ public class Simulationexample extends Application {
 
 	@Override
 	
-	//TEST TEST
+	//TEST TEST // Halloballo
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Processsimulation V 0.1");
 
