@@ -7,10 +7,9 @@ import javafx.util.Duration;
 
 public class Simulation {
 
-	
-	private SimulationVisual simulationVisual;		//to communicate with visuals
+	private SimulationVisual simulationVisual; // to communicate with visuals
 	private boolean fifo = true;
-	private int currentId = 0;						//to dynamically give Ids to processes
+	private int currentId = 0; // to dynamically give Ids to processes
 	private int time = 0;
 	private Timeline timeline;
 	private EventList eventList;
@@ -22,7 +21,7 @@ public class Simulation {
 	}
 
 	public Simulation(Process... processes) { // Simulation runs forever
-		
+
 		eventList = new EventList();
 		this.processList = new ArrayList<Process>();
 
@@ -32,7 +31,6 @@ public class Simulation {
 			this.processList.add(processes[i]);
 
 		}
-		
 
 		timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> this.incrementTime())); // the
 		// clock
@@ -70,43 +68,53 @@ public class Simulation {
 		currentId++;
 	}
 
-	public void add( Process... processes) {   //adds processes to the simulation
-		
-		
+	public void add(Process... processes) { // adds processes to the simulation
+
 		for (int i = 0; i < processes.length; i++) {
 			this.processList.add(currentId, processes[i]);
 			processes[i].setId(currentId);
 			currentId++;
 		}
-		
-		
-		
+
 	}
 
-	public void incrementTime() { // increments time of processes and messages
+	public void incrementTime() { // increments time of processes
 									// and checks if messages were send
-
-		System.out.println(eventList.toString(time));
 
 		this.time++;
 		incrementTimeProcesses();
 		checkMessages();
+		receiveMessages();
 
 	}
 
+	private void receiveMessages() {
+		// writes Messages into the Channelstate of processes
+		List<SimulationEvent> events = eventList.getEvents(time);
+		for (int i = 0; i < events.size(); i++) {
+			
+			SimulationEvent event = events.get(i);
+			
+			if (event.isReceive()) {
+				event.getMessage().destination.receiveMessage(event.getMessage());
+			}
+		}
 
+	}
 
-	private void checkMessages() { // checks if messages were send and adds Events
+	private void checkMessages() { // checks if messages were send and adds
+									// Events
 
 		for (int i = 0; i < this.processList.size(); i++) {
 
 			if (this.processList.get(i).messageSend()) {
 
 				List<Message> sendMessages = this.processList.get(i).sendMessage();
-				
-				for(int k = 0; k < sendMessages.size(); k++){
-					SimulationEvent send = new SimulationEvent(true, sendMessages.get(k), this.time);
-					SimulationEvent receive = new SimulationEvent(false, sendMessages.get(k), time + sendMessages.get(k).getTravelTime());
+
+				for (int k = 0; k < sendMessages.size(); k++) {
+					SimulationEvent send = new SimulationEvent(true, sendMessages.get(k), time);
+					SimulationEvent receive = new SimulationEvent(false, sendMessages.get(k),
+							time + sendMessages.get(k).getTravelTime());
 					this.eventList.add(send);
 					this.eventList.add(receive);
 				}
@@ -130,16 +138,18 @@ public class Simulation {
 		return this.eventList;
 	}
 
-	public Process getSelected(){
+	public Process getSelected() {
 		return selectedProcess;
 	}
-	public void setSelected(Process process) {    //sets the process, that got selected by the 
-		if(this.selectedProcess != null){
+
+	public void setSelected(Process process) { // sets the process, that got
+												// selected by the
+		if (this.selectedProcess != null) {
 			this.selectedProcess.setSelected(false);
-			this.selectedProcess = process;		
+			this.selectedProcess = process;
 
 		}
-		this.selectedProcess = process;		
+		this.selectedProcess = process;
 	}
 
 	public SimulationVisual getSimulationVisual() {
@@ -150,5 +160,4 @@ public class Simulation {
 		this.simulationVisual = simulationVisual;
 	}
 
-	
 }

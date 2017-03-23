@@ -137,7 +137,7 @@ public class Process {
 	}
 
 	public void receiveMessage(Message message) {
-
+System.out.println("receive");
 		if (message.isMarker()) {
 
 			this.localSnapshotTaken = true;
