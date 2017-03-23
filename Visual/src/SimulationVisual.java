@@ -78,7 +78,6 @@ public class SimulationVisual {
 																					// add
 																					// to
 																					// root
-			System.out.println("ID von P: " + p.getId());
 
 			root.getChildren().addAll(channelVisualList);
 		}

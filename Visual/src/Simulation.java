@@ -94,8 +94,9 @@ public class Simulation {
 		for (int i = 0; i < events.size(); i++) {
 			
 			SimulationEvent event = events.get(i);
-			
 			if (event.isReceive()) {
+				System.out.println(time);
+
 				event.getMessage().destination.receiveMessage(event.getMessage());
 			}
 		}

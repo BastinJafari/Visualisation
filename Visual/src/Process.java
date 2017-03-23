@@ -59,7 +59,6 @@ public class Process {
 
 	// returns a list of all send messages at a certain time
 	public List<Message> sendMessage() {
-		System.out.println("Bevor" + this.messageSend);
 		List<Message> messagesSend = new ArrayList<Message>();
 
 		// if it should send marker messages
@@ -124,7 +123,6 @@ public class Process {
 		}
 		this.messageSend = false;
 		markerSend = false;
-		System.out.println("Danach" + this.messageSend());
 		return messagesSend;
 	}
 
@@ -142,6 +140,8 @@ System.out.println("receive");
 
 			this.localSnapshotTaken = true;
 			sendMarker();
+			System.out.println("ASDASD");
+
 		}
 
 		this.messagesInProcessList.add(message);
