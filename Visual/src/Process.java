@@ -135,12 +135,12 @@ public class Process {
 	}
 
 	public void receiveMessage(Message message) {
-System.out.println("receive");
+		
+		System.out.println("Message from " + message.getStart().getId() + " to " + message.getDestination().getId() + " got received");
 		if (message.isMarker()) {
 
 			this.localSnapshotTaken = true;
 			sendMarker();
-			System.out.println("ASDASD");
 
 		}
 

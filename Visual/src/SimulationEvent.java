@@ -7,14 +7,14 @@ public class SimulationEvent {
 	private boolean isReceive;
 	private Message message;
 
-	
 	public SimulationEvent(boolean isSend, Message message) {
 
 		this.isSend = isSend;
 		this.isReceive = !isSend;
 		this.message = message;
-		this.sendTime = 0;}
-	
+		this.sendTime = 0;
+	}
+
 	public SimulationEvent(boolean isSend, Message message, int time) {
 
 		this.isSend = isSend;
@@ -37,8 +37,9 @@ public class SimulationEvent {
 	public int getSendTime() {
 		return sendTime;
 	}
-	public int getReceiveTime(){
-		
+
+	public int getReceiveTime() {
+
 		return receiveTime;
 	}
 
@@ -46,7 +47,15 @@ public class SimulationEvent {
 		return message;
 	}
 
-	
+	public String toString() {
+		if (isSend) {
+			return "Sendingevent|starttime: " + this.sendTime + "|receivetime: " + this.receiveTime + "|from "
+					+ message.getStart().getId() + " to " + message.getDestination().getId();
+		} else {
+			return "Receivingevent|starttime: " + this.sendTime + "|receivetime: " + this.receiveTime + "|from "
+					+ message.getStart().getId() + " to " + message.getDestination().getId();
+		}
 
-	
+	}
+
 }

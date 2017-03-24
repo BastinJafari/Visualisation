@@ -123,6 +123,7 @@ public class SimulationVisual {
 	private void visualizeMessages() { // visualizes all send messages at a
 										// certain time and
 
+		
 		List<SimulationEvent> simulationEvents = simulation.getEventList().getEvents(time); // gets
 																							// all
 																							// Events

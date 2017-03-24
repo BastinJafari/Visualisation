@@ -90,12 +90,13 @@ public class Simulation {
 
 	private void receiveMessages() {
 		// writes Messages into the Channelstate of processes
+		
 		List<SimulationEvent> events = eventList.getEvents(time);
+
 		for (int i = 0; i < events.size(); i++) {
 			
 			SimulationEvent event = events.get(i);
 			if (event.isReceive()) {
-				System.out.println(time);
 
 				event.getMessage().destination.receiveMessage(event.getMessage());
 			}
@@ -106,23 +107,23 @@ public class Simulation {
 	private void checkMessages() { // checks if messages were send and adds
 									// Events
 
+		List<Message> sendMessages = new ArrayList<Message>();
+
 		for (int i = 0; i < this.processList.size(); i++) {
 
 			if (this.processList.get(i).messageSend()) {
 
-				List<Message> sendMessages = this.processList.get(i).sendMessage();
-
-				for (int k = 0; k < sendMessages.size(); k++) {
-					SimulationEvent send = new SimulationEvent(true, sendMessages.get(k), time);
-					SimulationEvent receive = new SimulationEvent(false, sendMessages.get(k),
-							time + sendMessages.get(k).getTravelTime());
-					this.eventList.add(send);
-					this.eventList.add(receive);
-				}
+				sendMessages.addAll(this.processList.get(i).sendMessage());
 
 			}
-		}
 
+		}
+		for (int k = 0; k < sendMessages.size(); k++) {
+			SimulationEvent send = new SimulationEvent(true, sendMessages.get(k), time);
+			SimulationEvent receive = new SimulationEvent(false, sendMessages.get(k), time);
+			this.eventList.add(send);
+			this.eventList.add(receive);
+		}
 	}
 
 	private void incrementTimeProcesses() { // One tick for every process
