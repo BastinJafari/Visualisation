@@ -62,7 +62,7 @@ public class Process {
 
 		// if it should send marker messages
 
-		if (markerSend) {
+		if (markerSend) {  //sending marker messages through all outgoing channels
 
 			if (outGoingChannels.size() > 0) {
 				for (int i = 0; i < outGoingChannels.size(); i++) {
@@ -148,7 +148,7 @@ public class Process {
 		
 	}
 
-	private void addToChannelStates(Message message) {
+	private void addToChannelStates(Message message) {  //adds a message to a channelstate, if a marker came through
 		
 		for (int i = 0; i < channelStates.size(); i++) {
 			
@@ -223,7 +223,7 @@ public class Process {
 
 	
 
-	private Channel getChannel(Message message){
+	private Channel getChannel(Message message){   //finds out the Channel of a message
 		Channel channel = null;
 		
 		for (int i = 0; i < incommingChannels.size(); i++) {
