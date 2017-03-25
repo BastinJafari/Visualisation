@@ -17,11 +17,10 @@ public class Process {
 	private Boolean messageSend = false, localSnapshotTaken = false, markerSend = false;
 	private int id;
 	private int time; // The time that passed
-	private List<Message> messagesInProcessList = new ArrayList<Message>(); // A
-																			// List
-	// with all
-	// messages
-	// that came
+	ProcessState processState = new ProcessState(this); //list of messages that came
+	private List<ChannelState> channelStates;
+	ProcessState snapShot;
+
 
 	private List<Channel> outGoingChannels = new ArrayList<Channel>(); // A list
 																		// with
@@ -64,7 +63,6 @@ public class Process {
 		// if it should send marker messages
 
 		if (markerSend) {
-			System.out.println("MARKERASENASD");
 
 			if (outGoingChannels.size() > 0) {
 				for (int i = 0; i < outGoingChannels.size(); i++) {
@@ -136,7 +134,6 @@ public class Process {
 
 	public void receiveMessage(Message message) {
 		
-		System.out.println("Message from " + message.getStart().getId() + " to " + message.getDestination().getId() + " got received");
 		if (message.isMarker()) {
 
 			this.localSnapshotTaken = true;
@@ -144,7 +141,7 @@ public class Process {
 
 		}
 
-		this.messagesInProcessList.add(message);
+		processState.add(message);
 	}
 
 	public void incrementTime() {
@@ -199,6 +196,16 @@ public class Process {
 			simulation.setSelected(this);
 
 		}
+	}
+	
+	public void takeSnapShot(){
+		this.snapShot = processState;
+		takeChannelState();
+		
+	}
+
+	private void takeChannelState() {
+//toDO take all Channelstates		
 	}
 
 }

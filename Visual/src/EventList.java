@@ -48,7 +48,6 @@ public class EventList {
 	private void prolong() { // if list is full, then it makes the list 100
 								// bigger
 
-		System.out.println("TESTASD");
 
 		for (double i = x; i < x + 100; i++) { // fills the eventlist with
 												// another 100 timeslots
