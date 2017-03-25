@@ -49,11 +49,11 @@ public class SimulationEvent {
 
 	public String toString() {
 		if (isSend) {
-			return "Sendingevent|starttime: " + this.sendTime + "|receivetime: " + this.receiveTime + "|from "
-					+ message.getStart().getId() + " to " + message.getDestination().getId();
+			return "Sendingevent|sendertime: " + this.sendTime + "|receivetime: " + this.receiveTime + "|from "
+					+ message.getSender().getId() + " to " + message.getReceiver().getId();
 		} else {
-			return "Receivingevent|starttime: " + this.sendTime + "|receivetime: " + this.receiveTime + "|from "
-					+ message.getStart().getId() + " to " + message.getDestination().getId();
+			return "Receivingevent|sendertime: " + this.sendTime + "|receivetime: " + this.receiveTime + "|from "
+					+ message.getSender().getId() + " to " + message.getReceiver().getId();
 		}
 
 	}

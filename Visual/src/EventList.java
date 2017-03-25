@@ -66,14 +66,14 @@ public class EventList {
 
 			SimulationEvent simulationEvent = simulationEvents.get(i);
 			if (simulationEvent.isSend()) {
-				output = output + "Message send from: " + simulationEvent.getMessage().getStart().getId() + "to "
-						+ simulationEvent.getMessage().getDestination().getId() + "\n";
+				output = output + "Message send from: " + simulationEvent.getMessage().getSender().getId() + "to "
+						+ simulationEvent.getMessage().getReceiver().getId() + "\n";
 
 			}
 			
 			if (simulationEvent.isReceive()) {
-				output = output + "Message received from: " + simulationEvent.getMessage().getStart().getId() + "to "
-						+ simulationEvent.getMessage().getDestination().getId() + "\n";
+				output = output + "Message received from: " + simulationEvent.getMessage().getSender().getId() + "to "
+						+ simulationEvent.getMessage().getReceiver().getId() + "\n";
 
 			}
 		}

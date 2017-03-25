@@ -98,7 +98,7 @@ public class Simulation {
 			SimulationEvent event = events.get(i);
 			if (event.isReceive()) {
 
-				event.getMessage().destination.receiveMessage(event.getMessage());
+				event.getMessage().receiver.receiveMessage(event.getMessage());
 			}
 		}
 

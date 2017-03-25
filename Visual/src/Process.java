@@ -14,13 +14,13 @@ public class Process {
 	private int travelTime = 5;
 	private int processTime = 5;
 	private int chanceSendMessage; // Chance of sending a message
-	private Boolean messageSend = false, localSnapshotTaken = false, markerSend = false;
+	private Boolean messageSend = false, localSnapshotTaken = false, markerSend = false, recordChannelStates = false;
 	private int id;
 	private int time; // The time that passed
-	ProcessState processState = new ProcessState(this); //list of messages that came
+	ProcessState processState = new ProcessState(this); // list of messages that
+														// came
 	private List<ChannelState> channelStates;
 	ProcessState snapShot;
-
 
 	private List<Channel> outGoingChannels = new ArrayList<Channel>(); // A list
 																		// with
@@ -100,7 +100,7 @@ public class Process {
 			}
 		}
 
-		//if there was no marker command send normal message
+		// if there was no marker command send normal message
 		if (outGoingChannels.size() > 0 && !markerSend) {
 
 			int randomProcess = ThreadLocalRandom.current().nextInt(0, outGoingChannels.size()); // it
@@ -125,7 +125,7 @@ public class Process {
 	}
 
 	public void sendMarker() { // sets marker bit so next sending
-										// process it sends out marker messages
+								// process it sends out marker messages
 
 		markerSend = true;
 		messageSend = true;
@@ -133,15 +133,26 @@ public class Process {
 	}
 
 	public void receiveMessage(Message message) {
-		
+
 		if (message.isMarker()) {
 
-			this.localSnapshotTaken = true;
+			localSnapshotTaken = true;
 			sendMarker();
+			recordChannelStates = true;
 
 		}
 
 		processState.add(message);
+
+		if (recordChannelStates) {
+			
+			for (int i = 0; i < incommingChannels.size(); i++) {
+				
+				if (message.getSender() == incommingChannels.get(i).getSender()) {
+					addToChannelState(message);
+				}
+			}
+		}
 	}
 
 	public void incrementTime() {
@@ -197,13 +208,21 @@ public class Process {
 
 		}
 	}
-	
-	public void takeSnapShot(){
+
+	public void takeSnapShot() {
 		snapShot = processState;
 		localSnapshotTaken = true;
 	}
 
 	private void takeChannelState(Channel channel) {
+		ChannelState channelState = new ChannelState(channel);
+		channelStates.add(channelState);
 	}
 
+	private void addToChannelState(Message message){
+		
+		for (int i = 0; i < channelStates.size(); i++) {
+			if(channelStates.get(i).getChannel().getSender() == message.getSender()){}
+		}
+	}
 }

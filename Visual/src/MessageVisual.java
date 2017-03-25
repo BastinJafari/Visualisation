@@ -22,14 +22,14 @@ public class MessageVisual extends Circle {
 	public MessageVisual(Message message, SimulationVisual simulationVisual) {
 		
 
-		super(simulationVisual.getProcessVisualList().get(message.getStart().getId()).getCenterX(), simulationVisual.getProcessVisualList().get(message.getStart().getId()).getCenterY(), radius);
+		super(simulationVisual.getProcessVisualList().get(message.getSender().getId()).getCenterX(), simulationVisual.getProcessVisualList().get(message.getSender().getId()).getCenterY(), radius);
 
 	
 		//sets Start and Destination coordinates
-		double x1 = simulationVisual.getProcessVisualList().get(message.getStart().getId()).getCenterX();
-		double y1 = simulationVisual.getProcessVisualList().get(message.getStart().getId()).getCenterY();
-		double x2  = simulationVisual.getProcessVisualList().get(message.getDestination().getId()).getCenterX();;
-		double y2 = simulationVisual.getProcessVisualList().get(message.getDestination().getId()).getCenterY();;
+		double x1 = simulationVisual.getProcessVisualList().get(message.getSender().getId()).getCenterX();
+		double y1 = simulationVisual.getProcessVisualList().get(message.getSender().getId()).getCenterY();
+		double x2  = simulationVisual.getProcessVisualList().get(message.getReceiver().getId()).getCenterX();;
+		double y2 = simulationVisual.getProcessVisualList().get(message.getReceiver().getId()).getCenterY();;
 
 		
 		if(message.isMarker()){

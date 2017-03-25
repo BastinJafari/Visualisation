@@ -2,7 +2,7 @@ public abstract class Message {
 
 	
 	
-	protected Process start, destination;
+	protected Process sender, receiver;
 	protected int travelTime, processTime;
 	protected String message;
 	protected boolean arrived = false, finished = false, markerFlag;
@@ -14,17 +14,17 @@ public int getTravelTime() {
 		return this.travelTime;
 	}
 
-	public Process getStart() {
-		return this.start;
+	public Process getSender() {
+		return this.sender;
 	}
 
 	public int travelTime() {
 		return this.travelTime;
 	}
 
-	public Process getDestination() {
+	public Process getReceiver() {
 
-		return this.destination;
+		return this.receiver;
 	}
 
 
@@ -46,7 +46,7 @@ public int getTravelTime() {
 	public String toString() {
 
 		return "Message: " + getMessage() + "Traveltime: " + Integer.toString(travelTime) + "Processtime:"
-				+ Integer.toString(processTime) + "Destination: " + Integer.toString(destination.getId());
+				+ Integer.toString(processTime) + "Destination: " + Integer.toString(receiver.getId());
 	}
 
 	public boolean isMarker() {

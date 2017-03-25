@@ -18,4 +18,7 @@ public class ChannelState {
 		this.messageList.add(message);
 	}
 
+	public Channel getChannel(){
+		return channel;
+	};
 }
