@@ -81,7 +81,7 @@ public class MainClass extends Application {
 		sendControl.setLayoutY(buttonY );
 		sendControl.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		        simulation.getSelected().sendMarker();
+		        simulation.getSelected().takeSnapShot();
 		    	
 		    	
 

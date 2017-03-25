@@ -14,12 +14,12 @@ public class Process {
 	private int travelTime = 5;
 	private int processTime = 5;
 	private int chanceSendMessage; // Chance of sending a message
-	private Boolean messageSend = false, localSnapshotTaken = false, markerSend = false, recordChannelStates = false;
+	private Boolean messageSend = false, localSnapshotTaken = false, markerSend = false;
 	private int id;
 	private int time; // The time that passed
 	ProcessState processState = new ProcessState(this); // list of messages that
 														// came
-	private List<ChannelState> channelStates;
+	private List<ChannelState> channelStates = new ArrayList<ChannelState>() ;
 	ProcessState snapShot;
 
 	private List<Channel> outGoingChannels = new ArrayList<Channel>(); // A list
@@ -138,21 +138,27 @@ public class Process {
 
 			localSnapshotTaken = true;
 			sendMarker();
-			recordChannelStates = true;
+			channelStates.add(new ChannelState(getChannel(message)));
 
 		}
 
 		processState.add(message);
+		addToChannelStates(message);
 
-		if (recordChannelStates) {
+		
+	}
+
+	private void addToChannelStates(Message message) {
+		
+		for (int i = 0; i < channelStates.size(); i++) {
 			
-			for (int i = 0; i < incommingChannels.size(); i++) {
+			if(channelStates.get(i).getChannel() == getChannel(message)){
 				
-				if (message.getSender() == incommingChannels.get(i).getSender()) {
-					addToChannelState(message);
-				}
+				channelStates.get(i).addMessage(message);
 			}
+			
 		}
+		
 	}
 
 	public void incrementTime() {
@@ -209,20 +215,23 @@ public class Process {
 		}
 	}
 
-	public void takeSnapShot() {
+	public void takeSnapShot() {   //takes snapshot of process
 		snapShot = processState;
 		localSnapshotTaken = true;
+		sendMarker();
 	}
 
-	private void takeChannelState(Channel channel) {
-		ChannelState channelState = new ChannelState(channel);
-		channelStates.add(channelState);
-	}
+	
 
-	private void addToChannelState(Message message){
+	private Channel getChannel(Message message){
+		Channel channel = null;
 		
-		for (int i = 0; i < channelStates.size(); i++) {
-			if(channelStates.get(i).getChannel().getSender() == message.getSender()){}
+		for (int i = 0; i < incommingChannels.size(); i++) {
+			if(incommingChannels.get(i).getSender() == message.getSender()){
+				
+				channel = incommingChannels.get(i);
+			}
 		}
+		return channel;
 	}
 }
