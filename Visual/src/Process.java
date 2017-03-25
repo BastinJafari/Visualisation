@@ -199,13 +199,11 @@ public class Process {
 	}
 	
 	public void takeSnapShot(){
-		this.snapShot = processState;
-		takeChannelState();
-		
+		snapShot = processState;
+		localSnapshotTaken = true;
 	}
 
-	private void takeChannelState() {
-//toDO take all Channelstates		
+	private void takeChannelState(Channel channel) {
 	}
 
 }
