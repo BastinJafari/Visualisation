@@ -5,7 +5,6 @@ public class NormalMessage extends Message {
 
 	
 	public NormalMessage() {
-
 	}
 
 	public NormalMessage(String message, int travelTime, int processTime, Process sender, Process receiver) {

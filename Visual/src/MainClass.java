@@ -26,8 +26,7 @@ public class MainClass extends Application {
 	}
 
 	@Override
-	
-	//TEST TEST // Halloballo
+
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Processsimulation V 0.1");
 
@@ -38,9 +37,8 @@ public class MainClass extends Application {
 		int numberOfProcesses = 5;
 		double buttonX = 300;
 		double buttonY = 300;
-		Text selectedProcess;
 		Simulation simulation = new Simulation();
-		
+
 		Process p1 = new Process(simulation);
 		Process p2 = new Process(simulation);
 		Process p3 = new Process(simulation);
@@ -51,11 +49,14 @@ public class MainClass extends Application {
 		p1.connect(p3);
 		p3.connect(p4);
 		p5.connect(p1);
-		
+
 		simulation.add(p1, p2, p3, p4, p5);
 
 		SimulationVisual simulationVisual = new SimulationVisual(simulation, root);
-		simulation.setSimulationVisual(simulationVisual);  //for the communication of simulation with sv
+		simulation.setSimulationVisual(simulationVisual); // for the
+															// communication of
+															// simulation with
+															// sv
 
 		// Visualisation of channels
 
@@ -69,28 +70,30 @@ public class MainClass extends Application {
 			}
 
 		}
-		
-		
+
 		// Button for sending control messages
-		
-		Button sendControl = new Button("Send");
-		
-		
+		StateVisualisation stateVisualisation = new StateVisualisation(simulation, 200, 400);
+		root.getChildren().add(stateVisualisation);
+		Button sendControl = new Button("Make Snapshot");
 
-		sendControl.setLayoutX(buttonX );
-		sendControl.setLayoutY(buttonY );
+		sendControl.setLayoutX(buttonX);
+		sendControl.setLayoutY(buttonY);
 		sendControl.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		        simulation.getSelected().takeSnapShot();
-		    	
-		    	
+			@Override
+			public void handle(ActionEvent e) {
+				if (simulation.getSelected() != null) {
+					simulation.getSelected().takeSnapShot();
+					stateVisualisation.visualizeProcess();
 
-		    }
+				}
+
+			}
 		});
-		root.getChildren().add(sendControl);
 
+		root.getChildren().add(sendControl);
+		
+		System.out.println(root.getChildren().indexOf(simulationVisual));
 
 	}
-	
-	
+
 }

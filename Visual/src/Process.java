@@ -17,7 +17,7 @@ public class Process {
 	private Boolean messageSend = false, localSnapshotTaken = false, markerSend = false;
 	private int id;
 	private int time; // The time that passed
-	ProcessState processState = new ProcessState(this); // list of messages that
+	private ProcessState processState = new ProcessState(this); // list of messages that
 														// came
 	private List<ChannelState> channelStates = new ArrayList<ChannelState>() ;
 	ProcessState snapShot;
@@ -233,5 +233,9 @@ public class Process {
 			}
 		}
 		return channel;
+	}
+	
+	public ProcessState getProcessState(){
+		return processState;
 	}
 }

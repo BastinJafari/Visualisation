@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
+import javafx.scene.Group;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-public class SimulationVisual {
+public class SimulationVisual extends Group {
 
 	double destroyListCounter = 0;  //to control the size of the destroylist
 	private Pane root;
@@ -39,7 +37,7 @@ public class SimulationVisual {
 	int y5;
 
 	public SimulationVisual(Simulation simulation, Pane root) {
-
+		
 		x1 = 30;
 		y1 = 30;
 		x2 = 70; // setting the x and y for each individual node
@@ -80,6 +78,8 @@ public class SimulationVisual {
 																					// root
 
 			root.getChildren().addAll(channelVisualList);
+			System.out.println(root.getChildren().indexOf(channelVisualList));
+
 		}
 
 		root.getChildren().addAll(processVisualList);
@@ -145,6 +145,7 @@ public class SimulationVisual {
 																	// into the
 																	// destroylist
 				destroyList.get(destroytime).add(messageVisual);
+				
 			}
 		}
 
