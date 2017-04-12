@@ -17,10 +17,11 @@ public class Process {
 	private Boolean messageSend = false, localSnapshotTaken = false, markerSend = false;
 	private int id;
 	private int time; // The time that passed
-	private ProcessState processState = new ProcessState(this); // list of messages that
-														// came
-	private List<ChannelState> channelStates = new ArrayList<ChannelState>() ;
-	ProcessState snapShot;
+	private ProcessState processState = new ProcessState(this); // list of
+																// messages that
+	// came
+	private List<ChannelState> channelStates = new ArrayList<ChannelState>();
+	private ProcessState snapShot;
 
 	private List<Channel> outGoingChannels = new ArrayList<Channel>(); // A list
 																		// with
@@ -62,12 +63,13 @@ public class Process {
 
 		// if it should send marker messages
 
-		if (markerSend) {  //sending marker messages through all outgoing channels
+		if (markerSend) { // sending marker messages through all outgoing
+							// channels
 
 			if (outGoingChannels.size() > 0) {
 				for (int i = 0; i < outGoingChannels.size(); i++) {
 
-					MarkerMessage marker = new MarkerMessage("This is a Marker Message", travelTime, processTime, this,
+					MarkerMessage marker = new MarkerMessage("Marker Message", travelTime, processTime, this,
 							outGoingChannels.get(i).getReceiver());
 					messagesSend.add(marker);
 
@@ -93,9 +95,8 @@ public class Process {
 				// of
 				// the
 				// connections
-				NormalMessage message = new NormalMessage(
-						"this message is coming from Process" + Integer.toString(getId()), randomTravelTime,
-						randomProcessTime, this, outGoingChannels.get(randomProcess).getReceiver());
+				NormalMessage message = new NormalMessage("Normal Message", randomTravelTime, randomProcessTime, this,
+						outGoingChannels.get(randomProcess).getReceiver());
 				messagesSend.add(message);
 			}
 		}
@@ -109,7 +110,7 @@ public class Process {
 			// of
 			// the
 			// connections
-			NormalMessage message = new NormalMessage("this message is coming from Process" + Integer.toString(getId()),
+			NormalMessage message = new NormalMessage("Normal Message",
 					travelTime, processTime, this, outGoingChannels.get(randomProcess).getReceiver());
 			messagesSend.add(message);
 		}
@@ -145,20 +146,21 @@ public class Process {
 		processState.add(message);
 		addToChannelStates(message);
 
-		
 	}
 
-	private void addToChannelStates(Message message) {  //adds a message to a channelstate, if a marker came through
-		
+	private void addToChannelStates(Message message) { // adds a message to a
+														// channelstate, if a
+														// marker came through
+
 		for (int i = 0; i < channelStates.size(); i++) {
-			
-			if(channelStates.get(i).getChannel() == getChannel(message)){
-				
+
+			if (channelStates.get(i).getChannel() == getChannel(message)) {
+
 				channelStates.get(i).addMessage(message);
 			}
-			
+
 		}
-		
+
 	}
 
 	public void incrementTime() {
@@ -169,7 +171,7 @@ public class Process {
 		}
 	}
 
-	public void dice() {
+	private void dice() {
 
 		if (ThreadLocalRandom.current().nextInt(1, this.chanceSendMessage + 1) == 1) { // chance
 																						// of
@@ -215,27 +217,26 @@ public class Process {
 		}
 	}
 
-	public void takeSnapShot() {   //takes snapshot of process
+	public void takeSnapShot() { // takes snapshot of process
 		snapShot = processState;
 		localSnapshotTaken = true;
 		sendMarker();
 	}
 
-	
-
-	private Channel getChannel(Message message){   //finds out the Channel of a message
+	private Channel getChannel(Message message) { // finds out the Channel of a
+													// message
 		Channel channel = null;
-		
+
 		for (int i = 0; i < incommingChannels.size(); i++) {
-			if(incommingChannels.get(i).getSender() == message.getSender()){
-				
+			if (incommingChannels.get(i).getSender() == message.getSender()) {
+
 				channel = incommingChannels.get(i);
 			}
 		}
 		return channel;
 	}
-	
-	public ProcessState getProcessState(){
+
+	public ProcessState getProcessState() {
 		return processState;
 	}
 }

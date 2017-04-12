@@ -45,8 +45,8 @@ public int getTravelTime() {
 
 	public String toString() {
 
-		return "Message: " + getMessage() + "Traveltime: " + Integer.toString(travelTime) + "Processtime:"
-				+ Integer.toString(processTime) + "Destination: " + Integer.toString(receiver.getId());
+		return getMessage() + " Traveltime: " + Integer.toString(travelTime) + " Processtime: "
+				+ Integer.toString(processTime) +" Sender: " + Integer.toString(sender.getId()) + " Receiver: " + Integer.toString(receiver.getId());
 	}
 
 	public boolean isMarker() {

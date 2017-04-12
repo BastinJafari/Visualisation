@@ -12,16 +12,19 @@ public class ProcessVisual extends Group {
 
 	final double x;
 	final double y;
+	final double radius = 20;
 	private Circle circle;
 	private Process process;
 	private int id;
+	private SimulationVisual simulationVisual;
 	Text text;
-	public ProcessVisual(Process process, double x, double y) { // x and y for
+	public ProcessVisual(SimulationVisual simulationVisual, Process process, double x, double y) { // x and y for
 																// coordinates
 		super();
+		this.simulationVisual = simulationVisual;
 		this.x = x;
 		this.y = y;
-		this.circle = new Circle(x, y, 20, Color.ORANGE);
+		this.circle = new Circle(x, y, radius, Color.ORANGE);
 		this.process = process;
 		id = this.process.getId();
 
@@ -62,7 +65,10 @@ public class ProcessVisual extends Group {
 				else{
 				process.setSelected(true);
 
-				changeColor(Color.BROWN);}
+				changeColor(Color.BROWN);
+				simulationVisual.getstateVisual().visualizeProcess();
+				}
+				
 
 			}
 		});

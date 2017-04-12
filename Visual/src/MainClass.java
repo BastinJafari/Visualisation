@@ -52,28 +52,18 @@ public class MainClass extends Application {
 
 		simulation.add(p1, p2, p3, p4, p5);
 
-		SimulationVisual simulationVisual = new SimulationVisual(simulation, root);
+		SimulationVisual simulationVisual = new SimulationVisual(simulation);
 		simulation.setSimulationVisual(simulationVisual); // for the
 															// communication of
 															// simulation with
 															// sv
 
+		root.getChildren().add(simulationVisual);
 		// Visualisation of channels
 
-		for (int i = 0; i < numberOfProcesses; i++) {
-
-			List<Channel> channelList = simulation.getProcessList().get(i).getOutGoingChannels();
-
-			for (int k = 0; k < channelList.size(); k++) {
-
-				new ChannelVisual(channelList.get(k), simulationVisual);
-			}
-
-		}
+	
 
 		// Button for sending control messages
-		StateVisualisation stateVisualisation = new StateVisualisation(simulation, 200, 400);
-		root.getChildren().add(stateVisualisation);
 		Button sendControl = new Button("Make Snapshot");
 
 		sendControl.setLayoutX(buttonX);
@@ -83,7 +73,6 @@ public class MainClass extends Application {
 			public void handle(ActionEvent e) {
 				if (simulation.getSelected() != null) {
 					simulation.getSelected().takeSnapShot();
-					stateVisualisation.visualizeProcess();
 
 				}
 
@@ -92,7 +81,6 @@ public class MainClass extends Application {
 
 		root.getChildren().add(sendControl);
 		
-		System.out.println(root.getChildren().indexOf(simulationVisual));
 
 	}
 
