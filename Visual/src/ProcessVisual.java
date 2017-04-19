@@ -67,6 +67,7 @@ public class ProcessVisual extends Group {
 
 				changeColor(Color.BROWN);
 				simulationVisual.getstateVisual().visualizeProcess();
+				simulationVisual.getSnapShotVisual().visualizeSnapShot();
 				}
 				
 

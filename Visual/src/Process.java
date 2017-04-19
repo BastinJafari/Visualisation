@@ -137,8 +137,7 @@ public class Process {
 
 		if (message.isMarker()) {
 
-			localSnapshotTaken = true;
-			sendMarker();
+			takeSnapShot();
 			channelStates.add(new ChannelState(getChannel(message)));
 
 		}
@@ -218,9 +217,11 @@ public class Process {
 	}
 
 	public void takeSnapShot() { // takes snapshot of process
-		snapShot = processState;
+		System.out.println("Process " + this.getId() + " took Snapshot");
+		snapShot = new ProcessState(processState);
 		localSnapshotTaken = true;
 		sendMarker();
+		System.out.println(snapShot.toString());
 	}
 
 	private Channel getChannel(Message message) { // finds out the Channel of a
@@ -238,5 +239,21 @@ public class Process {
 
 	public ProcessState getProcessState() {
 		return processState;
+	}
+	
+	public Boolean localSnapshotTaken(){
+		return localSnapshotTaken;
+	}
+	
+	public ProcessState getSnapShot(){
+		if(snapShot != null){
+			
+			return snapShot;
+
+		}
+		else{
+			return null;
+			
+		}
 	}
 }

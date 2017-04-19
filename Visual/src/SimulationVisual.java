@@ -14,6 +14,8 @@ public class SimulationVisual extends Group {
 	private Simulation simulation;
 	private Timeline timeline;
 	private StateVisualisation stateVisualisation;
+	private SnapShotVisual snapShotVisual;
+
 	private List<List<MessageVisual>> destroyList = new ArrayList<List<MessageVisual>>(); // list
 																							// of
 																							// messages
@@ -51,7 +53,8 @@ public class SimulationVisual extends Group {
 		visualizeProcesses();
 		this.stateVisualisation = new StateVisualisation(simulation, 230, 100);
 		this.getChildren().add(stateVisualisation);
-
+		this.snapShotVisual = new SnapShotVisual(simulation, 230, 50);
+		this.getChildren().add(snapShotVisual);
 
 		for (int i = 0; i < 100; i++) { // fills the destroylist with 100
 										// timeslots
@@ -177,5 +180,9 @@ public class SimulationVisual extends Group {
 			List<MessageVisual> messageVisualToDestroylist = new ArrayList<MessageVisual>();
 			destroyList.add(messageVisualToDestroylist);
 		}
+	}
+
+	public SnapShotVisual getSnapShotVisual() {
+		return snapShotVisual;
 	}
 }
