@@ -31,7 +31,7 @@ public class MainClass extends Application {
 		primaryStage.setTitle("Processsimulation V 0.1");
 
 		Pane root = new Pane();
-		primaryStage.setScene(new Scene(root, 500, 500));
+		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();
 
 		int numberOfProcesses = 5;

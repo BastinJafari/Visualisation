@@ -116,9 +116,8 @@ public class Process {
 		}
 
 		if (outGoingChannels.size() == 0) {
-			NormalMessage noMessage = new NormalMessage("no connections", 0, 0, this, this);
-			messagesSend.add(noMessage);
-			return messagesSend;
+		
+			return null;
 		}
 		this.messageSend = false;
 		markerSend = false;
@@ -217,11 +216,11 @@ public class Process {
 	}
 
 	public void takeSnapShot() { // takes snapshot of process
-		System.out.println("Process " + this.getId() + " took Snapshot");
 
 		localSnapshotTaken = true;
 		sendMarker();
-		System.out.println(snapShot.toString());
+		snapShot = processState.clone();
+		
 	}
 
 	private Channel getChannel(Message message) { // finds out the Channel of a

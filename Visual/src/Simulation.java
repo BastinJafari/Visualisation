@@ -111,7 +111,7 @@ public class Simulation {
 
 		for (int i = 0; i < this.processList.size(); i++) {
 
-			if (this.processList.get(i).messageSend()) {
+			if (this.processList.get(i).messageSend()&& !this.processList.get(i).getOutGoingChannels().isEmpty()) {
 
 				sendMessages.addAll(this.processList.get(i).sendMessage());
 
