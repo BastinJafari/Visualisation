@@ -1,10 +1,10 @@
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 
-public class ChannelVisual extends Path {
 
-	
+public class ChannelVisual extends Arrow {
+
+	private double[] vektor = new double[2];
+	double circleradius = 20;
+
 	private Channel channel;
 	
 	public ChannelVisual (Channel channel, int[] coordinates){
@@ -21,15 +21,25 @@ public class ChannelVisual extends Path {
 		int x2 = coordinates[id2];
 		int y2 = coordinates[id2+1];
 		
-//		int pitch = ((y1-y2)/(x1-x2));
-//
-//
-		this.getElements().add(new MoveTo(x1, y1));
-		this.getElements().add(new LineTo(x2, y2));
-//		
-//		this.getElements().add(new MoveTo((x1 + 0.8*(x1-x2))/2, (y1 + x1*pitch)));
-//
-//		this.getElements().add(new LineTo(200,200));
+		vektor[0]= x2-x1;
+		vektor[1]= y2-y1;
+		double length = Math.sqrt(Math.pow(vektor[0], 2)+Math.pow(vektor[1], 2));
+		
+		
+		double factor = (length-circleradius)/length;
+		
+		
+		vektor[0]= vektor[0]*factor;
+		vektor[1]= vektor[1]*factor;
+		x2= (int) (x1+vektor[0]);
+		y2= (int) (y1+vektor[1]);
+		
+
+		
+		this.setStartX(x1);
+		this.setStartY(y1);
+		this.setEndX(x2);
+		this.setEndY(y2);
 
 		
 	}
