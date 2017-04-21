@@ -218,7 +218,7 @@ public class Process {
 
 	public void takeSnapShot() { // takes snapshot of process
 		System.out.println("Process " + this.getId() + " took Snapshot");
-		snapShot = new ProcessState(processState);
+
 		localSnapshotTaken = true;
 		sendMarker();
 		System.out.println(snapShot.toString());
