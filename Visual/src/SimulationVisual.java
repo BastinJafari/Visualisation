@@ -53,7 +53,7 @@ public class SimulationVisual extends Group {
 		visualizeProcesses();
 		this.stateVisualisation = new StateVisualisation(simulation, 230, 100);
 		this.getChildren().add(stateVisualisation);
-		this.snapShotVisual = new SnapShotVisual(simulation, 230, 300);
+		this.snapShotVisual = new SnapShotVisual(simulation, 230, 330);
 		this.getChildren().add(snapShotVisual);
 
 		for (int i = 0; i < 100; i++) { // fills the destroylist with 100
@@ -87,12 +87,10 @@ public class SimulationVisual extends Group {
 			int k = i * 2;
 			Process p = simulation.getProcessList().get(i);
 			ProcessVisual pv = new ProcessVisual(this, p, coordinates[k], coordinates[k + 1]);
-			System.out.println(pv.getTranslateZ());
 
 			this.processVisualList.add(pv);
 			this.getChildren().add(pv);
 			pv.toFront();
-			System.out.println(pv.getTranslateZ());
 
 
 		}

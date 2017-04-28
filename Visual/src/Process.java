@@ -219,7 +219,7 @@ public class Process {
 
 		localSnapshotTaken = true;
 		sendMarker();
-		snapShot = processState.clone();
+		snapShot = new ProcessState(processState);
 		
 	}
 

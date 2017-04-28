@@ -27,7 +27,7 @@ public class MainClass extends Application {
 
 	@Override
 
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Processsimulation V 0.1");
 
 		Pane root = new Pane();
@@ -80,8 +80,8 @@ public class MainClass extends Application {
 		});
 
 		root.getChildren().add(sendControl);
-		
 
 	}
+
 
 }

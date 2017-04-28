@@ -1,4 +1,10 @@
-public abstract class Message {
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+public abstract class Message implements java.io.Serializable{
 
 	
 	
@@ -9,6 +15,21 @@ public abstract class Message {
 
 	
 
+	
+	public void test(){
+		
+		this.message = "Test";
+	}
+	
+public Message copy() {
+		
+		String stringCopy = this.message;
+		Message copy = new NormalMessage(stringCopy, travelTime,  processTime,  sender,  receiver);
+		copy.arrived = this.arrived;
+		copy.finished = this.finished;
+		copy.markerFlag = this.markerFlag;
+		return copy;
+}
 public int getTravelTime() {
 
 		return this.travelTime;
