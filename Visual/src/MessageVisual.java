@@ -49,6 +49,8 @@ public class MessageVisual extends Circle {
 		pathTransition.play();
 
 	}
+
+
 	
 	
 }

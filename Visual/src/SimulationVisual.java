@@ -126,6 +126,7 @@ public class SimulationVisual extends Group {
 		for (int i = 0; i < size; i++) {
 
 			this.getChildren().remove(messageVisualsToDestroy.get(i));
+	
 		}
 
 		if (destroyListCounter > (destroyList.size() / 2)) {
