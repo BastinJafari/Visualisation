@@ -15,18 +15,8 @@ public class SimulationVisual extends Group {
 	private Timeline timeline;
 	private StateVisualisation stateVisualisation;
 	private SnapShotVisual snapShotVisual;
+	private MessageVisual[][] destroyList = new MessageVisual[10][100];  //for deleting messageVisuals
 
-	private List<List<MessageVisual>> destroyList = new ArrayList<List<MessageVisual>>(); // list
-																							// of
-																							// messages
-																							// to
-																							// destroy
-																							// at
-																							// a
-																							// certain
-																							// point
-																							// in
-																							// time
 	int x1 = 30;
 	int y1 = 30;
 	int x2 = 70; // setting the x and y for each individual node
@@ -42,7 +32,6 @@ public class SimulationVisual extends Group {
 	public SimulationVisual(Simulation simulation) {
 		super();
 
-		
 		this.simulation = simulation;
 		this.processVisualList = new ArrayList<ProcessVisual>();
 		this.timeline = simulation.getTimeline();
@@ -56,11 +45,7 @@ public class SimulationVisual extends Group {
 		this.snapShotVisual = new SnapShotVisual(simulation, 230, 330);
 		this.getChildren().add(snapShotVisual);
 
-		for (int i = 0; i < 100; i++) { // fills the destroylist with 100
-										// timeslots
-			List<MessageVisual> messageVisualToDestroylist = new ArrayList<MessageVisual>();
-			destroyList.add(messageVisualToDestroylist);
-		}
+		
 	}
 
 	private void visualizeChannels() {
@@ -72,9 +57,9 @@ public class SimulationVisual extends Group {
 				ChannelVisual channelVisual = new ChannelVisual(channelList.get(j), coordinates);
 
 				this.getChildren().add(channelVisual);
-				
+
 			}
-			
+
 		}
 	}
 
@@ -92,17 +77,14 @@ public class SimulationVisual extends Group {
 			this.getChildren().add(pv);
 			pv.toFront();
 
-
 		}
 
-
 	}
 
-	public StateVisualisation getstateVisual(){
+	public StateVisualisation getstateVisual() {
 		return stateVisualisation;
 	}
-	
-	
+
 	public List<ProcessVisual> getProcessVisualList() {
 
 		return this.processVisualList;
@@ -116,21 +98,19 @@ public class SimulationVisual extends Group {
 
 	}
 
-	private void destroyMessages() { // destroys all visualisations of messages,
-										// that arrived and checks if
-										// destroylist must get bigger
-		destroyListCounter++;
-		List<MessageVisual> messageVisualsToDestroy = destroyList.get(time);
-		int size = messageVisualsToDestroy.size();
+	private void destroyMessages() { 
 
-		for (int i = 0; i < size; i++) {
+		int slot = time % 10;
+		for (int i = 0; i < 100; i++) {
 
-			this.getChildren().remove(messageVisualsToDestroy.get(i));
-	
-		}
+			MessageVisual messageToDestroy = destroyList[slot][i];
+			if (messageToDestroy != null) {
+				this.getChildren().remove(messageToDestroy);
+				messageToDestroy = null;
 
-		if (destroyListCounter > (destroyList.size() / 2)) {
-			expandDestroyList();
+			} else {
+				break;
+			}
 		}
 	}
 
@@ -153,14 +133,13 @@ public class SimulationVisual extends Group {
 				Message message = simulationEvents.get(i).getMessage();
 				MessageVisual messageVisual = new MessageVisual(message, this);
 
-
 				messageVisualList.add(messageVisual);
 
 				int destroytime = time + message.getTravelTime(); // adding the
 																	// messageVisual
 																	// into the
 																	// destroylist
-				destroyList.get(destroytime).add(messageVisual);
+				addToDestroyList(destroytime, messageVisual);
 
 			}
 		}
@@ -169,17 +148,19 @@ public class SimulationVisual extends Group {
 
 	}
 
-	
+	private void addToDestroyList(int destroytime, MessageVisual messageVisual) {
+		int slot = (destroytime % 10);
+		for (int i = 0; i < 100; i++) {
 
-	private void expandDestroyList() { // if Destroylist gets too big it fills
-										// it up
-										// with additional time slots
+			if (destroyList[slot][i] == null) {
 
-		for (int i = destroyList.size(); i < destroyList.size() + 100; i++) {
-			List<MessageVisual> messageVisualToDestroylist = new ArrayList<MessageVisual>();
-			destroyList.add(messageVisualToDestroylist);
+				destroyList[slot][i] = messageVisual;
+				break;
+			}
 		}
 	}
+
+
 
 	public SnapShotVisual getSnapShotVisual() {
 		return snapShotVisual;
